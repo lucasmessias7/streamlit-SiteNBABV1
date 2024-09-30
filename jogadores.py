@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 import plotly
 
-st.title('Dados jogadores')
 
 dados_jogadores = pd.read_csv('dados/dados_jogadores_23-24.csv', delimiter=';')
 
@@ -36,21 +35,35 @@ assistencias = dados_jogadores[[
 ]]
 
 
-filtro = ['Pontos','Rebotes', 'Assistencias']
+filtro = ['Tudo','Pontos','Rebotes', 'Assistencias']
 
-st.sidebar.selectbox('NBA', filtro)
+filtrado = st.sidebar.selectbox('NBA', filtro)
 
+if filtrado == 'Tudo':
+    st.title('Todos os dados dos jogadores')
+    dados_jogadores
 
-
-aba1, aba2, aba3 = st.tabs(['Pontos', 'Rebotes', 'Assistencias'])
-
-
-
-with aba1:
+if filtrado == 'Pontos':
+    st.title('Pontos por Jogador')
     pontos
 
-with aba2:
+
+if filtrado == 'Rebotes':
+    st.title('Rebotes por jogador')
     rebotes
 
-with aba3:
+if filtrado == 'Assistencias':
+    st.title('Assistência por jogador')
     assistencias
+# aba1, aba2, aba3 = st.tabs(['Pontos', 'Rebotes', 'Assistencias'])
+
+
+
+# with aba1:
+#     pontos
+
+# with aba2:
+#     rebotes
+
+# with aba3:
+#     assistencias
