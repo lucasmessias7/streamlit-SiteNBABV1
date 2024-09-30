@@ -6,6 +6,9 @@ import plotly
 dados_jogadores = pd.read_csv('dados/dados_jogadores_23-24.csv', delimiter=';')
 
 
+def pesquisa():
+    st.text_input('Digite sua pesquisa: ')
+
 pontos = dados_jogadores[[
     'Jogador',
     'Equipe',
