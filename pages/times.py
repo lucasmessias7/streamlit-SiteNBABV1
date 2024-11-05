@@ -14,7 +14,7 @@ dados_times = dados_times.rename(columns={
     'Vitorias.1' : 'Fora de casa',
     'Conference' : 'Contra Leste',
     'Conferencia' : 'Contra Oeste'
-}).drop(columns=['Mês','Mês.1','Mês.2','Mês.3','Mês.4','Mês.5','Mês.6'])
+}).drop(columns=['Mês','Mês.1','Mês.2','Mês.3','Mês.4','Mês.5','Mês.6', 'Posição'],index=0)
 
 team_team = team_team.rename(columns={'ATL' : 'Atlanta Hawks',
     'BOS' : 'Boston Celtics',
@@ -73,9 +73,14 @@ filtrado_time = st.sidebar.selectbox('Dados', filtro_time)
 if filtrado_time == 'Confrontos':
     st.title('Confrontos')
     busca_time(team_team)
+    team_team
 
 
 
 if filtrado_time == 'Vitorias':
     st.title('Vitórias e derrotas ')
     busca_time(dados_times)
+    dados_times
+
+
+

@@ -3,8 +3,7 @@ import streamlit as st
 import plotly
 
 
-dados_jogadores = pd.read_csv('dados/dados_jogadores_23-24.csv', delimiter=';')
-
+dados_jogadores = pd.read_csv('dados/dados_jogadores25-26.csv', delimiter=';', encoding='latin1')
 
 
 def faz_busca(df):
@@ -16,28 +15,51 @@ def faz_busca(df):
     else:
         st.write("Digite algo na barra de pesquisa para ver os resultados.")
 
-    
+dados_jogadores.rename(columns={
+                        'Player' : 'Jogador',
+                        'Team' : 'Equipe',
+                        'Pos' : 'Posição',
+                        'G' : 'Jogos',
+                        'GS' : 'Jogos Iniciados',
+                        'MP' : 'Minutos Jogados',
+                        'FG' : 'Cestas totais',
+                        'FGA' : 'Cestas tentadas totais',
+                        'FG%' : 'Porcentagem de cestas',
+                        '3P' : 'Cestas de 3 pontos',
+                        '3PA' : 'Tentativas de cestas de 3',
+                        '3P%' : 'Porcentagem de cestas de 3 pontos',
+                        '2P' : 'Cestas de 2 pontos',
+                        '2PA' : 'Tentativas de cestas de 2 pontos',
+                        '2P%' : 'Porcentagem de cestas de 2 pontos',
+                        'FT' : 'Lances livres',
+                        'FTA' : 'Tentativas de lances livres',
+                        'FT%' : 'Porcentagem de lances livres',
+                        'ORB' : 'Rebotes ofensivos',
+                        'DRB' : 'Rebotes defensivos',
+                        'TRB' : 'Rebotes totais',
+                        'AST' : 'Assistências',
+                        'STL' : 'Roubos de bola',
+                        'BLK' : 'Bloqueios',
+                        'TOV' : 'Perdas de bola',
+                        'PF' : 'Faltas pessoais',
+                        'PTS' : 'Pontos'
+                    }, inplace=True
+
+                       )
 
 
 
 
-pontos = dados_jogadores[[
-    'Jogador',
-    'Equipe',
-    'Minutos jogados',
-    'Taxa de acerto total',
-    'Pontos de 3 convertidos',
-    'Pontos de 3 tentados',
-    'Taxa de acerto de 3 pontos',
-    'Pontos por jogo'
-]]
+
 
 
 rebotes = dados_jogadores[[
     'Jogador',
     'Equipe',
-    'Minutos jogados',
-    'Rebotes'
+    'Minutos Jogados',
+    'Rebotes ofensivos',
+    'Rebotes defensivos',
+    'Rebotes totais'
 ]]
 
 
@@ -45,21 +67,19 @@ rebotes = dados_jogadores[[
 assistencias = dados_jogadores[[
     'Jogador',
     'Equipe',
-    'Minutos jogados',
-    'Assistencias'
+    'Minutos Jogados',
+    'Assistências'
 ]]
 
 
-filtro = ['Pontos','Rebotes', 'Assistencias']
-
+filtro = ['Dados gerais','Rebotes', 'Assistencias']
 filtrado = st.sidebar.selectbox('NBA', filtro)
 
 
-if filtrado == 'Pontos':
-    st.title('Pontos por Jogador')
-    faz_busca(pontos)
-    pontos
-
+if filtrado == 'Dados gerais':
+    st.title('Dados gerais')
+    faz_busca(dados_jogadores)
+    dados_jogadores
 
 if filtrado == 'Rebotes':
     st.title('Rebotes por jogador')
@@ -70,15 +90,3 @@ if filtrado == 'Assistencias':
     st.title('Assistência por jogador')
     faz_busca(assistencias)
     assistencias
-# aba1, aba2, aba3 = st.tabs(['Pontos', 'Rebotes', 'Assistencias'])
-
-
-
-# with aba1:
-#     pontos
-
-# with aba2:
-#     rebotes
-
-# with aba3:
-#     assistencias
