@@ -36,7 +36,7 @@ print(dados_json)
 
 
 
-with open('dados_tabela.json', 'w', encoding='utf-8') as f:
+with open('dados/dados_tabela.json', 'w', encoding='utf-8') as f:
     f.write(dados_json)
 
 print("Os dados foram salvos no arquivo 'dados_tabela.json'.")

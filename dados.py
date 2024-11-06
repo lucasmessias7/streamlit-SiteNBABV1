@@ -2,9 +2,9 @@ import json
 import pandas as pd
 import streamlit as st
 import numpy as np
+from buscador import faz_busca
 
-
-with open('dados_tabela.json', 'r', encoding='utf-8') as f:
+with open('dados/dados_tabela.json', 'r', encoding='utf-8') as f:
     dados_json = json.load(f)
 df = pd.DataFrame(dados_json)
 df = df.rename(columns= {
@@ -39,15 +39,6 @@ df = df.rename(columns= {
                         28 : 'Pontos'
 })
 
-def faz_busca(df):
-    pesquisa = st.text_input('Digite sua pesquisa:')
-    if pesquisa:
-        dados_filtrados = df[df.apply(lambda row: row.astype(str).str.contains(pesquisa, case=False).any(), axis=1)]
-        st.write(f"Resultados para '{pesquisa}':")
-        st.dataframe(dados_filtrados)
-    else:
-        st.write("Digite algo na barra de pesquisa para ver os resultados.")
-
 
 rebotes = df[[
     'Jogador',
@@ -58,8 +49,6 @@ rebotes = df[[
     'Rebotes totais'
 ]]
 
-
-
 assistencias = df[[
     'Jogador',
     'Equipe',
@@ -67,8 +56,23 @@ assistencias = df[[
     'Assistências'
 ]]
 
+pontos = df[[
+    'Jogador',
+    'Equipe',
+    'Minutos Jogados',
+    'Cestas totais',
+    'Cestas tentadas totais',
+    'Cestas de 3 pontos',
+    'Tentativas de cestas de 3',
+    'Porcentagem de cestas de 3 pontos',
+    'Cestas de 2 pontos',
+    'Tentativas de cestas de 2 pontos',
+    'Porcentagem de cestas de 2 pontos',
 
-filtro = ['Dados gerais','Rebotes', 'Assistencias']
+]]
+
+
+filtro = ['Dados gerais','Pontos','Rebotes', 'Assistencias']
 filtrado = st.sidebar.selectbox('NBA', filtro)
 
 
@@ -86,3 +90,8 @@ if filtrado == 'Assistencias':
     st.title('Assistência por jogador')
     faz_busca(assistencias)
     assistencias
+
+if filtrado == 'Pontos':
+    st.title('Pontos por jogador')
+    faz_busca(pontos)
+    pontos
